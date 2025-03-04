@@ -127,6 +127,7 @@ Visualization (Grafana + Kiali)
 
 Run all the different tools
 Terminal Command URL
+
 Terminal 1 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 http://localhost:8080/productpage (App)
 
 Terminal 2 kubectl port-forward svc/kiali -n istio-system 20001:20001 http://localhost:20001 (Kiali Dashboard)
