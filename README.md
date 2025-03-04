@@ -31,9 +31,66 @@ What Will Be Installed?
 17. Access Logs Configuration
 18. Policy Enforcement with OPA (Open Policy Agent)
 
-Setup Steps
+# Tools Overview
 
-1. Install Docker
+### 1. Kiali (Service Mesh Observability)
+
+- Visualizes the service mesh topology.
+- Shows real-time traffic between services.
+- Displays success rates, error rates, and request volume.
+- Helps debug request routing and traffic management.
+
+### 2. Jaeger (Distributed Tracing)
+
+- Traces request paths across microservices.
+- Helps visualize which services participated in a request.
+- Useful for latency analysis and debugging performance issues.
+
+### 3. Prometheus (Metrics Collection)
+
+- Collects metrics from services and proxies.
+- Monitors CPU, memory, and custom application metrics.
+- Provides query language (PromQL) for metric analysis.
+
+### 4. Grafana (Metrics Visualization)
+
+- Visualizes metrics from Prometheus.
+- Provides pre-configured dashboards for Istio.
+- Custom dashboards can be built for app-specific metrics.
+
+### 5. Service Mesh Traffic Management
+
+- Canary Deployments: Route traffic percentages to different versions of a service.
+- Fault Injection: Simulate failures to test resiliency.
+- Circuit Breaking: Prevents cascading failures.
+
+### 6. Mutual TLS (mTLS)
+
+- Encrypts communication between services.
+- Provides secure service-to-service authentication.
+
+### 7. Authorization Policies
+
+- Define fine-grained access control rules.
+- Allow or deny traffic based on users, roles, or headers.
+
+### 8. Rate Limiting
+
+- Restrict the number of requests allowed per second.
+- Helps protect services from abuse or overload.
+
+### 9. Egress Gateway
+
+- Controls outbound traffic to external services.
+- Enforces security and policy rules on external communication.
+
+### 10. Access Logs
+
+- Logs detailed information about requests handled by Envoy proxies.
+
+### Setup Steps
+
+### 1. Install Docker
 
 ```bash
 brew install --cask docker
@@ -42,19 +99,19 @@ open /Applications/Docker.app
 
 Wait until Docker is running.
 
-2. Install Kind and Kubectl
+### 2. Install Kind and Kubectl
 
 ```bash
 brew install kind kubectl
 ```
 
-3. Create Kind Cluster
+### 3. Create Kind Cluster
 
 ```bash
 kind create cluster --name istio-cluster --config kind-istio-cluster.yaml
 ```
 
-4. Install Istio CLI
+### 4. Install Istio CLI
 
 ```bash
 curl -L https://istio.io/downloadIstio | sh -
@@ -69,7 +126,7 @@ echo 'export PATH=$(pwd)/bin:$PATH' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-5. Install Istio in the Cluster
+### 5. Install Istio in the Cluster
 
 ```bash
 ./bin/istioctl install --set profile=demo -y
@@ -77,35 +134,35 @@ kubectl create namespace istio-test
 kubectl label namespace istio-test istio-injection=enabled
 ```
 
-6. Deploy Bookinfo Application
+### 6. Deploy Bookinfo Application
 
 ```bash
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml -n istio-test
 kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml -n istio-test
 ```
 
-7. Install Kiali Dashboard
+### 7. Install Kiali Dashboard
 
 ```bash
 kubectl apply -f samples/addons
 kubectl rollout status deployment/kiali -n istio-system
 ```
 
-8. Install Jaeger for Distributed Tracing
+### 8. Install Jaeger for Distributed Tracing
 
 ```bash
 kubectl apply -f samples/addons/jaeger.yaml -n istio-system
 kubectl rollout status deployment/jaeger -n istio-system
 ```
 
-9. Install Prometheus for Metrics Monitoring
+### 9. Install Prometheus for Metrics Monitoring
 
 ```bash
 kubectl apply -f samples/addons/prometheus.yaml
 kubectl rollout status deployment/prometheus -n istio-system
 ```
 
-10. Install Grafana for Visualization
+### 10. Install Grafana for Visualization
 
 ```bash
 kubectl apply -f samples/addons/grafana.yaml
@@ -138,7 +195,8 @@ Terminal 4 kubectl port-forward svc/prometheus -n istio-system 9090:9090 http://
 
 Terminal 5 kubectl port-forward svc/grafana -n istio-system 3000:3000 http://localhost:3000 (Grafana Dashboard)
 
-11. Service Mesh Traffic Management
+### 11. Service Mesh Traffic Management
+
     Canary Deployments
     Deploy a virtual service to send 90% of traffic to `v1` and 10% to `v2`:
 
@@ -146,7 +204,8 @@ Terminal 5 kubectl port-forward svc/grafana -n istio-system 3000:3000 http://loc
 kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-90-10.yaml -n istio-test
 ```
 
-Fault Injection
+### Fault Injection
+
 Simulate delays and aborts in service responses:
 
 ```bash
@@ -184,23 +243,28 @@ Prevent excessive retries to unhealthy services:
 kubectl apply -f samples/bookinfo/networking/destination-rule-circuit-breaker.yaml -n istio-test
 ```
 
-16. External Service Egress Gateway
+### 16. External Service Egress Gateway
+
     Route traffic to external services through Istio gateways:
 
 ```bash
 kubectl apply -f samples/bookinfo/networking/egress-gateway.yaml -n istio-test
 ```
 
-17. Custom Metrics with Prometheus
+### 17. Custom Metrics with Prometheus
+
     Configure Prometheus to scrape custom application metrics.
-18. Access Logs Configuration
+
+### 18. Access Logs Configuration
+
     Enable detailed logs for Istio proxies:
 
 ```bash
 kubectl apply -f samples/bookinfo/networking/envoy-access-logs.yaml -n istio-test
 ```
 
-19. Policy Enforcement with OPA
+### 19. Policy Enforcement with OPA
+
     Apply advanced authorization policies:
 
 ```bash
