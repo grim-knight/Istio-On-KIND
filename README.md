@@ -212,7 +212,10 @@ Simulate delays and aborts in service responses:
 kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-test-delay.yaml -n istio-test
 ```
 
-Verify the fault injection through the **Bookinfo Application** and **Kiali Dashboard**. 12. Mutual TLS Authentication (mTLS)
+Verify the fault injection through the **Bookinfo Application** and **Kiali Dashboard**.
+
+### 12. Mutual TLS Authentication (mTLS)
+
 Enable mutual TLS authentication between services for secure communication:
 Apply strict mTLS policy:
 
@@ -220,7 +223,10 @@ Apply strict mTLS policy:
 kubectl apply -f samples/bookinfo/networking/destination-rule-all-mtls.yaml -n istio-test
 ```
 
-Verify secure communication through Kiali by checking service-to-service TLS connections. 13. Authorization Policies
+Verify secure communication through Kiali by checking service-to-service TLS connections.
+
+### 13. Authorization Policies
+
 Define rules to allow or deny traffic between services:
 
 Allow only `v1` of the `reviews` service to communicate with `ratings`:
@@ -229,14 +235,20 @@ Allow only `v1` of the `reviews` service to communicate with `ratings`:
 kubectl apply -f samples/bookinfo/networking/authorization-policy.yaml -n istio-test
 ```
 
-Verify through Kiali by observing denied traffic in the **Graph** view. 14. Rate Limiting
+Verify through Kiali by observing denied traffic in the **Graph** view.
+
+### 14. Rate Limiting
+
 Apply a rate limit of 1 request per second on the `reviews` service:
 
 ```bash
 kubectl apply -f samples/bookinfo/networking/virtual-service-ratelimit.yaml -n istio-test
 ```
 
-Test the rate limiting by sending multiple requests and observing **429 Too Many Requests** responses. 15. Circuit Breaking
+Test the rate limiting by sending multiple requests and observing **429 Too Many Requests** responses.
+
+### 15. Circuit Breaking
+
 Prevent excessive retries to unhealthy services:
 
 ```bash
