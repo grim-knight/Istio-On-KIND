@@ -21,15 +21,15 @@ What Will Be Installed?
 7. Jaeger (Distributed Tracing)
 8. Prometheus (Metrics Monitoring)
 9. Grafana (Visualization)
-10. Service Mesh Traffic Management (Canary Deployments, Fault Injection)
-11. Mutual TLS Authentication (mTLS)
-12. Authorization Policies
-13. Rate Limiting
-14. Circuit Breaking
-15. External Service Egress Gateway
-16. Custom Metrics with Prometheus
-17. Access Logs Configuration
-18. Policy Enforcement with OPA (Open Policy Agent)
+<!-- 10. Service Mesh Traffic Management (Canary Deployments, Fault Injection)
+10. Mutual TLS Authentication (mTLS)
+11. Authorization Policies
+12. Rate Limiting
+13. Circuit Breaking
+14. External Service Egress Gateway
+15. Custom Metrics with Prometheus
+16. Access Logs Configuration
+17. Policy Enforcement with OPA (Open Policy Agent) -->
 
 # Tools Overview
 
@@ -169,7 +169,9 @@ kubectl apply -f samples/addons/grafana.yaml
 kubectl rollout status deployment/grafana -n istio-system
 ```
 
-What does it looks like
+## What Does It Look Like
+
+```
 [User Request]
 ↓
 [Istio Ingress Gateway]
@@ -181,19 +183,17 @@ What does it looks like
 Traces (Jaeger) | Logs | mTLS | Authorization
 ↓
 Visualization (Grafana + Kiali)
+```
 
-Run all the different tools
-Terminal Command URL
+## Run All the Different Tools
 
-Terminal 1 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 http://localhost:8080/productpage (App)
-
-Terminal 2 kubectl port-forward svc/kiali -n istio-system 20001:20001 http://localhost:20001 (Kiali Dashboard)
-
-Terminal 3 kubectl port-forward svc/tracing -n istio-system 16686:80 http://localhost:16686 (Jaeger Tracing)
-
-Terminal 4 kubectl port-forward svc/prometheus -n istio-system 9090:9090 http://localhost:9090 (Prometheus Metrics)
-
-Terminal 5 kubectl port-forward svc/grafana -n istio-system 3000:3000 http://localhost:3000 (Grafana Dashboard)
+| Terminal   | Command                                                                 | URL                                         |
+| ---------- | ----------------------------------------------------------------------- | ------------------------------------------- |
+| Terminal 1 | `kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80` | [App](http://localhost:8080/productpage)    |
+| Terminal 2 | `kubectl port-forward svc/kiali -n istio-system 20001:20001`            | [Kiali Dashboard](http://localhost:20001)   |
+| Terminal 3 | `kubectl port-forward svc/tracing -n istio-system 16686:80`             | [Jaeger Tracing](http://localhost:16686)    |
+| Terminal 4 | `kubectl port-forward svc/prometheus -n istio-system 9090:9090`         | [Prometheus Metrics](http://localhost:9090) |
+| Terminal 5 | `kubectl port-forward svc/grafana -n istio-system 3000:3000`            | [Grafana Dashboard](http://localhost:3000)  |
 
 ### 11. Service Mesh Traffic Management
 
