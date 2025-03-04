@@ -128,9 +128,13 @@ Visualization (Grafana + Kiali)
 Run all the different tools
 Terminal Command URL
 Terminal 1 kubectl port-forward svc/istio-ingressgateway -n istio-system 8080:80 http://localhost:8080/productpage (App)
+
 Terminal 2 kubectl port-forward svc/kiali -n istio-system 20001:20001 http://localhost:20001 (Kiali Dashboard)
+
 Terminal 3 kubectl port-forward svc/tracing -n istio-system 16686:80 http://localhost:16686 (Jaeger Tracing)
+
 Terminal 4 kubectl port-forward svc/prometheus -n istio-system 9090:9090 http://localhost:9090 (Prometheus Metrics)
+
 Terminal 5 kubectl port-forward svc/grafana -n istio-system 3000:3000 http://localhost:3000 (Grafana Dashboard)
 
 11. Service Mesh Traffic Management
